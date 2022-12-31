@@ -2,3 +2,4 @@ streamlit>=1.14.0<1.15.0
 transformers==4.25.1
 torch
 pytorch-lightning
+torchvision
