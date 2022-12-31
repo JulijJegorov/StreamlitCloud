@@ -15,3 +15,5 @@ model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_datal
 
 
 model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
+
+st.text(model)
