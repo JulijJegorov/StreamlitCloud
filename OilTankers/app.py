@@ -24,30 +24,15 @@ def load_dataset():
     dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
                             annotation_file=f'{__location__}/imgs/labels_coco.json',
                             feature_extractor=feature_extractor)
-
     return dataset
 
-st.set_page_config(page_title='Oil Tankers Detection')
 
-yolo_model = load_model()
-test_dataset = load_dataset()
+def plot_bboxes(dataset):
+    images = list()
+    images_pred = list()
 
-st.text(test_dataset)
-
-random_idxs = np.random.choice(len(test_dataset), 2)
-categories = {k: v['name'] for k, v in test_dataset.coco.cats.items()}
-
-
-#Maximum Sides Difference
-remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
-
-
-
-images = list()
-images_pred = list()
-
-
-if st.button('get random images'):
+    random_idxs = np.random.choice(len(test_dataset), 2)
+    categories = {k: v['name'] for k, v in test_dataset.coco.cats.items()}
     for random_idx in random_idxs:
         image_idx = test_dataset.coco.getImgIds()[random_idx]
         image_name = test_dataset.coco.loadImgs(int(image_idx))[0]['file_name']
@@ -62,8 +47,23 @@ if st.button('get random images'):
         image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.00000000000000, remove_rectangles)
         images_pred.append(image)
 
+    st.markdown('**Annotated Bounding Boxes**')
+    st.image(images, width=350, use_column_width=False)
+    st.markdown('**Predicted Bounding Boxes**')
+    st.image(images_pred, width=350, use_column_width=False)
 
-st.markdown('**Annotated Bounding Boxes**')
-st.image(images, width=350, use_column_width=False)
-st.markdown('**Predicted Bounding Boxes**')
-st.image(images_pred, width=350, use_column_width=False)
+
+st.set_page_config(page_title='Oil Tankers Detection')
+
+yolo_model = load_model()
+test_dataset = load_dataset()
+
+#Maximum Sides Difference
+remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
+plot_bboxes(test_dataset)
+
+if st.button('get random images'):
+    plot_bboxes(test_dataset)
+
+
+
