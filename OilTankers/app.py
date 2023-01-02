@@ -34,13 +34,21 @@ dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
                         annotation_file=f'{__location__}/imgs/labels_coco.json',
                         feature_extractor=feature_extractor)
 
+
 st.text(dataset)
+categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
+
+image_idx = 0
+image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
+image_path = f'{__location__}/imgs/{image_name}'
+annotations = dataset.coco.imgToAnns[image_idx]
+image = annotate_image(image_path, annotations, categories)
+
+st.image(image)
+
 
 model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
 
 
-
-
 model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
 
-st.text(model)
