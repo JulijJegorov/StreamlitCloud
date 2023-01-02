@@ -18,6 +18,7 @@ def load_model():
     model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
     return model
 
+
 def load_dataset():
     feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
     dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
@@ -28,31 +29,32 @@ def load_dataset():
 
 st.set_page_config(page_title='Oil Tankers Detection')
 
-model = load_model()
-dataset = load_dataset()
+yolo_model = load_model()
+test_dataset = load_dataset()
 
-st.text(dataset)
+st.text(test_dataset)
 
-random_idxs = np.random.choice(len(dataset), 2)
-categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
+random_idxs = np.random.choice(len(test_dataset), 2)
+categories = {k: v['name'] for k, v in test_dataset.coco.cats.items()}
 
 images = list()
 images_pred = list()
-for random_idx in random_idxs:
-    image_idx = dataset.coco.getImgIds()[random_idx]
-    image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
-    image_path = f'{__location__}/imgs/{image_name}'
 
-    annotations = dataset.coco.imgToAnns[image_idx]
-    image = annotate_image(image_path, annotations, categories)
-    images.append(image)
+if st.button('get random images'):
+    for random_idx in random_idxs:
+        image_idx = test_dataset.coco.getImgIds()[random_idx]
+        image_name = test_dataset.coco.loadImgs(int(image_idx))[0]['file_name']
+        image_path = f'{__location__}/imgs/{image_name}'
 
-    pixel_values, target = dataset[random_idx]
-    pixel_values = pixel_values.unsqueeze(0)
-    image = annotate_image_predicted(model, pixel_values, image_path, 0.000000000000005)
-    images_pred.append(image)
+        annotations = test_dataset.coco.imgToAnns[image_idx]
+        image = annotate_image(image_path, annotations, categories)
+        images.append(image)
+
+        pixel_values, target = test_dataset[random_idx]
+        pixel_values = pixel_values.unsqueeze(0)
+        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.000000000000005)
+        images_pred.append(image)
 
 
 st.image(images, width=350, use_column_width=False)
-
 st.image(images_pred, width=350, use_column_width=False)
