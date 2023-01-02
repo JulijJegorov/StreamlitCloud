@@ -18,26 +18,23 @@ def load_model():
     model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
     return model
 
+def load_dataset():
+    feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
+    dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
+                            annotation_file=f'{__location__}/imgs/labels_coco.json',
+                            feature_extractor=feature_extractor)
 
+    return dataset
 
-st.set_page_config(page_icon=":barrel:", page_title='Oil Tankers Detection')
+st.set_page_config(page_title='Oil Tankers Detection')
 
 model = load_model()
-
-st.text('Hi Streamlit Cloud')
-
-feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
-dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
-                        annotation_file=f'{__location__}/imgs/labels_coco.json',
-                        feature_extractor=feature_extractor)
-
+dataset = load_dataset()
 
 st.text(dataset)
+
+random_idxs = np.random.choice(len(dataset), 2)
 categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
-
-
-
-random_idxs = np.random.choice(len(dataset), 3)
 
 images = list()
 images_pred = list()
@@ -56,41 +53,6 @@ for random_idx in random_idxs:
     images_pred.append(image)
 
 
+st.image(images, width=350, use_column_width=False)
 
-st.image(images, width=300, use_column_width=False)
-
-st.image(images_pred, width=300, use_column_width=False)
-
-
-
-
-# image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
-#
-#
-# annotations = dataset.coco.imgToAnns[image_idx]
-# image = annotate_image(image_path, annotations, categories)
-
-
-
-
-#
-#
-# pixel_values, target = dataset[0]
-# pixel_values = pixel_values.unsqueeze(0).to('cpu')
-# model.eval()
-# with torch.no_grad():
-#   outputs = model(pixel_values=pixel_values)
-#   bboxes = outputs.pred_boxes[0].cpu()
-#
-# bboxes_scaled = rescale_bboxes(bboxes, image.size)
-#
-#
-# st.text(bboxes_scaled)
-#
-# image_idx = dataset.coco.getImgIds()[0]
-#
-# image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
-# image_path = f'{__location__}/imgs/{image_name}'
-# image = Image.open(image_path)
-#
-# st.image(image, width=300, use_column_width=False)
+st.image(images_pred, width=350, use_column_width=False)
