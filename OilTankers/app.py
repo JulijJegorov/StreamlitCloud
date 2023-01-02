@@ -69,4 +69,13 @@ model.eval()
 with torch.no_grad():
   outputs = model(pixel_values=pixel_values)
 
+
 st.text(outputs)
+
+image_idx = dataset.coco.getImgIds()[0]
+
+image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
+image_path = f'{__location__}/imgs/{image_name}'
+image = Image.open(image_path)
+
+st.image(image, width=300, use_column_width=False)
