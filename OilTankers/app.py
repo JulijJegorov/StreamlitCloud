@@ -1,12 +1,14 @@
+"""
+    Author: julij
+    Date: 31/12/2022
+    Description:
+"""
 import os
 import numpy as np
 import torch
 import streamlit as st
-
 from yolonet import YoloNet
 from custom_dataset import CustomDataset
-from PIL import Image, ImageDraw, ImageFont
-
 from image_helper import annotate_image, annotate_image_predicted
 from transformers import AutoFeatureExtractor
 
@@ -66,8 +68,7 @@ st.markdown("""We know that bounding boxes must be squared. To reduce noise all
 yolo_model = load_model()
 test_dataset = load_dataset()
 
-#Maximum Sides Difference
-remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=True)
+remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
 slider_sides_diff = st.sidebar.slider('Maximum Sides Difference in %', 0, 25, 10, 5) / 100
 
 random_run = st.sidebar.button('Load Random Images')
