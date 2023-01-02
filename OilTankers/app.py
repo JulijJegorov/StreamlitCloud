@@ -13,22 +13,18 @@ from transformers import AutoFeatureExtractor
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
-@st.cache
 def load_model():
     model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
     model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
     return model
 
 
-st.set_page_config(page_icon="🐤", page_title="Twitter Sentiment Analyzer new")
 
+st.set_page_config(page_icon=":barrel:", page_title='Oil Tankers Detection')
 
 model = load_model()
 
-
-st.write('<base target="_blank">', unsafe_allow_html=True)
 st.text('Hi Streamlit Cloud')
-st.text(__location__)
 
 feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
 dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
