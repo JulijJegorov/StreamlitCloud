@@ -15,6 +15,7 @@ st.text(__location__)
 
 dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'), annotation_file=f'{__location__}/labels_coco.json', feature_extractor=feature_extractor)
 
+st.text(dataset)
 
 model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
 
