@@ -53,14 +53,15 @@ def plot_bboxes(test_dataset, remove_rectangles, slider_sides_diff):
     st.image(images_pred, width=350, use_column_width=False)
 
 
-st.set_page_config(page_title='Oil Tankers Detection')
+st.set_page_config(page_title='Tanker Detection')
+st.title('Floating Head Oil Tanker Detection')
 
 yolo_model = load_model()
 test_dataset = load_dataset()
 
 #Maximum Sides Difference
 remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=True)
-slider_sides_diff = st.sidebar.slider('Maximum Sides Difference', 0, 25, 10, 5) / 100
+slider_sides_diff = st.sidebar.slider('Maximum Sides Difference in %', 0, 25, 10, 5) / 100
 
 random_run = st.sidebar.button('Load Random Images')
 
