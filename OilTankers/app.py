@@ -52,6 +52,7 @@ for random_idx in random_idxs:
     images.append(image)
 
     pixel_values, target = dataset[random_idx]
+    pixel_values = pixel_values.unsqueeze(0)
     image = annotate_image_predicted(model, pixel_values, image_path, 0.000000000000005)
     images_pred.append(image)
 
