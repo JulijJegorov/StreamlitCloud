@@ -27,7 +27,7 @@ def load_dataset():
     return dataset
 
 
-def plot_bboxes(test_dataset, remove_rectangles):
+def plot_bboxes(test_dataset, remove_rectangles, slider_sides_diff):
     images = list()
     images_pred = list()
 
@@ -44,7 +44,7 @@ def plot_bboxes(test_dataset, remove_rectangles):
 
         pixel_values, target = test_dataset[random_idx]
         pixel_values = pixel_values.unsqueeze(0)
-        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.000000000005, remove_rectangles)
+        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.000000000005, remove_rectangles, slider_sides_diff)
         images_pred.append(image)
 
     st.markdown('**Annotated Bounding Boxes**')
@@ -60,10 +60,12 @@ test_dataset = load_dataset()
 
 #Maximum Sides Difference
 remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=True)
-random_run = st.button('get random images')
+slider_sides_diff = st.sidebar.slider('Maximum Sides Difference', 0, 100, 5) / 100
+
+random_run = st.sidebar.button('Load Random Images')
 
 if random_run:
-    plot_bboxes(test_dataset, remove_rectangles)
+    plot_bboxes(test_dataset, remove_rectangles, slider_sides_diff)
 
 
 
