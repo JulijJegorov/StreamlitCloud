@@ -3,6 +3,7 @@ import torch
 import streamlit as st
 from yolonet import YoloNet
 from custom_dataset import CustomDataset
+from transformers import AutoFeatureExtractor
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
@@ -12,8 +13,10 @@ st.write('<base target="_blank">', unsafe_allow_html=True)
 st.text('Hi Streamlit Cloud')
 st.text(__location__)
 
-
-dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'), annotation_file=f'{__location__}/labels_coco.json', feature_extractor=feature_extractor)
+feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
+dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
+                        annotation_file=f'{__location__}/labels_coco.json',
+                        feature_extractor=feature_extractor)
 
 st.text(dataset)
 
