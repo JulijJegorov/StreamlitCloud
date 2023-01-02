@@ -52,7 +52,7 @@ if st.button('get random images'):
 
         pixel_values, target = test_dataset[random_idx]
         pixel_values = pixel_values.unsqueeze(0)
-        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.000000000000005)
+        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.00000000000000)
         images_pred.append(image)
 
 
