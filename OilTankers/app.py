@@ -16,7 +16,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 
 def load_model():
-    model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
+    model = YoloNet()
     model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
     return model
 
