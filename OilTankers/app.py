@@ -56,5 +56,5 @@ if st.button('get random images'):
         images_pred.append(image)
 
 
-st.image(images, width=350, use_column_width=False)
-st.image(images_pred, width=350, use_column_width=False)
+st.image(images, width=350, use_column_width=False, caption=['Annotated BBoxes'] * 2)
+st.image(images_pred, width=350, use_column_width=False, caption=['Predicted BBoxes'] * 2)
