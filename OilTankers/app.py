@@ -60,7 +60,7 @@ test_dataset = load_dataset()
 
 #Maximum Sides Difference
 remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=True)
-slider_sides_diff = st.sidebar.slider('Maximum Sides Difference', 0, 100, 5) / 100
+slider_sides_diff = st.sidebar.slider('Maximum Sides Difference', 0, 25, 10, 5) / 100
 
 random_run = st.sidebar.button('Load Random Images')
 
