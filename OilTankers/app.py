@@ -13,12 +13,17 @@ from transformers import AutoFeatureExtractor
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
+@st.cache
+def load_model():
+    model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
+    model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
+    return model
+
+
 st.set_page_config(page_icon="🐤", page_title="Twitter Sentiment Analyzer new")
 
 
-model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
-model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
-
+model = load_model()
 
 
 st.write('<base target="_blank">', unsafe_allow_html=True)
@@ -36,9 +41,7 @@ categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
 
 
 
-image_idxs = np.random.choice(dataset.coco.getImgIds(), 2)
-
-random_idxs = np.random.choice(len(dataset), 2)
+random_idxs = np.random.choice(len(dataset), 3)
 
 images = list()
 images_pred = list()
