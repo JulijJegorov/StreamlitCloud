@@ -40,7 +40,7 @@ for idx, image_idx in enumerate(image_idxs):
     image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
     image_path = f'{__location__}/imgs/{image_name}'
     annotations = dataset.coco.imgToAnns[image_idx]
-    image =b annotate_image(image_path, annotations, categories)
+    image = annotate_image(image_path, annotations, categories)
     images.append(image)
 
 # image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
