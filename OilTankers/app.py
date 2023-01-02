@@ -34,14 +34,16 @@ dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
 st.text(dataset)
 categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
 
+
+
 image_idxs = np.random.choice(dataset.coco.getImgIds(), 2)
 
+random_idxs = np.random.choice(len(dataset), 2)
 
 images = list()
 images_pred = list()
-for idx, image_idx in enumerate(image_idxs):
-    pixel_values, target = dataset[image_idx]
-
+for random_idx in random_idxs:
+    image_idx = dataset.coco.getImgIds()[random_idx]
     image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
     image_path = f'{__location__}/imgs/{image_name}'
 
@@ -49,9 +51,9 @@ for idx, image_idx in enumerate(image_idxs):
     image = annotate_image(image_path, annotations, categories)
     images.append(image)
 
+    pixel_values, target = dataset[random_idx]
     image = annotate_image_predicted(model, pixel_values, image_path, 0.000000000000005)
     images_pred.append(image)
-
 
 
 
