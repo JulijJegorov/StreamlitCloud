@@ -55,8 +55,8 @@ def plot_bboxes(test_dataset, remove_rectangles, slider_sides_diff):
     st.image(images_pred, width=350, use_column_width=False)
 
 
-st.set_page_config(page_title='Tanker Detection')
-st.title('Floating Head Oil Tanker Detection')
+st.set_page_config(page_title='Oil Tanks Detection')
+st.title('Floating Head Oil Tanks Detection')
 
 st.markdown("""YOLO model was trained to identify floating head oil tankers.""")
 st.markdown("""Click **Load Random Images** button on the sidebar to display
