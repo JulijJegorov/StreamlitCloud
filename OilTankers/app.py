@@ -59,6 +59,9 @@ st.title('Floating Head Oil Tanker Detection')
 st.markdown("""YOLO model was trained to identify floating head oil tankers.""")
 st.markdown("""Click **Load Random Images** button on the sidebar to display
                 2 annotated images and predicted bounding boxes.""")
+st.markdown("""We know that bounding boxes must be squared. To reduce noise all
+                rectangles with the side differences larger than *Maximum Sides Difference in %*
+                can be removed with **Remove Rectangles** checkbox""")
 
 yolo_model = load_model()
 test_dataset = load_dataset()
