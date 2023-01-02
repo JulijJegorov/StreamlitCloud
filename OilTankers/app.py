@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import torch
 import streamlit as st
 
@@ -38,18 +39,27 @@ dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
 st.text(dataset)
 categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
 
-image_idx = dataset.coco.getImgIds()[0]
+image_idxs = np.random.choice(dataset.coco.getImgIds() ,2)
 
-image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
-image_path = f'{__location__}/imgs/{image_name}'
-annotations = dataset.coco.imgToAnns[image_idx]
-image = annotate_image(image_path, annotations, categories)
+images = list()
+for idx, image_idx in enumerate(image_idxs):
+    image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
+    image_path = f'{__location__}/imgs/{image_name}'
+    annotations = dataset.coco.imgToAnns[image_idx]
+    image = annotate_image(image_path, annotations, categories)
+    images.append(image)
 
-st.image(image)
+# image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
+#
+#
+# annotations = dataset.coco.imgToAnns[image_idx]
+# image = annotate_image(image_path, annotations, categories)
+
+st.image(images, use_column_width=True)
 
 
-model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
-
-
-model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
+# model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
+#
+#
+# model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
 
