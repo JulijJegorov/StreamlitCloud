@@ -58,8 +58,14 @@ for idx, image_idx in enumerate(image_idxs):
 st.image(images, width=300, use_column_width=False)
 
 
-# model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
-#
-#
-# model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
+model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
+model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
 
+
+pixel_values, target = dataset[image_idx]
+pixel_values = pixel_values.unsqueeze(0).to('cpu')
+model.eval()
+with torch.no_grad():
+  outputs = model(pixel_values=pixel_values)
+
+st.text(outputs)
