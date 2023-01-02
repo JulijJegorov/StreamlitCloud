@@ -15,7 +15,7 @@ st.text(__location__)
 
 feature_extractor = AutoFeatureExtractor.from_pretrained('hustvl/yolos-tiny')
 dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
-                        annotation_file=f'{__location__}/labels_coco.json',
+                        annotation_file=f'{__location__}/imgs/labels_coco.json',
                         feature_extractor=feature_extractor)
 
 st.text(dataset)
