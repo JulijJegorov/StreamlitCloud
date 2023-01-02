@@ -37,8 +37,15 @@ st.text(test_dataset)
 random_idxs = np.random.choice(len(test_dataset), 2)
 categories = {k: v['name'] for k, v in test_dataset.coco.cats.items()}
 
+
+#Maximum Sides Difference
+remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
+
+
+
 images = list()
 images_pred = list()
+
 
 if st.button('get random images'):
     for random_idx in random_idxs:
@@ -52,7 +59,7 @@ if st.button('get random images'):
 
         pixel_values, target = test_dataset[random_idx]
         pixel_values = pixel_values.unsqueeze(0)
-        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.00000000000000)
+        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.00000000000000, remove_rectangles)
         images_pred.append(image)
 
 

@@ -11,7 +11,7 @@ COLORS = ['#1F497D', '#4F81BD',  '#C0504D', '#9BBB59', '#8064A2', '#4BACC6', '#F
 COLORS_CYCLE = COLORS * 150
 
 
-def annotate_image(image_path: str, annotations: dict, categories: dict):
+def annotate_image(image_path, annotations, categories):
   image = Image.open(image_path)
   image_draw = ImageDraw.Draw(image, 'RGBA')
 
@@ -24,7 +24,7 @@ def annotate_image(image_path: str, annotations: dict, categories: dict):
   return image
 
 
-def annotate_image_predicted(model, pixel_values, image_path, threshold):
+def annotate_image_predicted(model, pixel_values, image_path, threshold, remove_rectanlges=False, max_sides_difference = 0.1):
   image = Image.open(image_path)
   model.eval()
   with torch.no_grad():
@@ -33,7 +33,13 @@ def annotate_image_predicted(model, pixel_values, image_path, threshold):
   probas = outputs.logits.softmax(-1)[0, :, :-1]
   keep = probas.max(-1).values > threshold
   bboxes = outputs.pred_boxes[0, keep]
-  bboxes_scaled = rescale_bboxes(bboxes, image.size)
+
+  if remove_rectanlges:
+    bboxes_filter = abs(bboxes[:, 2] - bboxes[:, 3]) / bboxes[:, 3] < max_sides_difference
+    bboxes_scaled = rescale_bboxes(bboxes[bboxes_filter], image.size)
+  else:
+    bboxes_scaled = rescale_bboxes(bboxes, image.size)
+
 
   image_draw = ImageDraw.Draw(image, 'RGBA')
   for idx, (xmin, ymin, xmax, ymax) in enumerate(bboxes_scaled.tolist()):
