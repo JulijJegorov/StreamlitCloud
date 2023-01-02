@@ -62,7 +62,7 @@ model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_datal
 model.load_state_dict(torch.load(f'{__location__}/yolonet_.pt'))
 
 
-pixel_values, target = dataset[image_idx]
+pixel_values, target = dataset[image_idxs[0]]
 pixel_values = pixel_values.unsqueeze(0).to('cpu')
 model.eval()
 with torch.no_grad():
