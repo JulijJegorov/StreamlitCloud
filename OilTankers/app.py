@@ -38,7 +38,8 @@ dataset = CustomDataset(imgage_folder=(f'{__location__}/imgs'),
 st.text(dataset)
 categories = {k: v['name'] for k, v in dataset.coco.cats.items()}
 
-image_idx = 0
+image_idx = dataset.coco.getImgIds()[0]
+
 image_name = dataset.coco.loadImgs(int(image_idx))[0]['file_name']
 image_path = f'{__location__}/imgs/{image_name}'
 annotations = dataset.coco.imgToAnns[image_idx]
