@@ -55,7 +55,7 @@ for idx, image_idx in enumerate(image_idxs):
 # annotations = dataset.coco.imgToAnns[image_idx]
 # image = annotate_image(image_path, annotations, categories)
 
-st.image(images, use_column_width=False)
+st.image(images, width=200, use_column_width=False)
 
 
 # model = YoloNet(lr=2.5e-5, weight_decay=1e-4, train_dataloader=None, valid_dataloader=None)
