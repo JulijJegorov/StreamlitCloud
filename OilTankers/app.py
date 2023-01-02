@@ -44,7 +44,7 @@ def plot_bboxes(test_dataset, remove_rectangles):
 
         pixel_values, target = test_dataset[random_idx]
         pixel_values = pixel_values.unsqueeze(0)
-        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.00000000000000, remove_rectangles)
+        image = annotate_image_predicted(yolo_model, pixel_values, image_path, 0.000000000005, remove_rectangles)
         images_pred.append(image)
 
     st.markdown('**Annotated Bounding Boxes**')
