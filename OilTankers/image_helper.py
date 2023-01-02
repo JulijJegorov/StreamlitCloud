@@ -40,7 +40,6 @@ def annotate_image_predicted(model, pixel_values, image_path, threshold, remove_
   else:
     bboxes_scaled = rescale_bboxes(bboxes, image.size)
 
-
   image_draw = ImageDraw.Draw(image, 'RGBA')
   for idx, (xmin, ymin, xmax, ymax) in enumerate(bboxes_scaled.tolist()):
     image_draw.rectangle((xmin, ymin, xmax, ymax), outline=COLORS_CYCLE[idx], width=2)

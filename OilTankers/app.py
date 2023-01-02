@@ -59,10 +59,10 @@ yolo_model = load_model()
 test_dataset = load_dataset()
 
 #Maximum Sides Difference
-remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
+remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=True)
 random_run = st.button('get random images')
 
-plot_bboxes(test_dataset)
+plot_bboxes(test_dataset, remove_rectangles)
 
 if random_run:
     plot_bboxes(test_dataset, remove_rectangles)
