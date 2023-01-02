@@ -56,7 +56,7 @@ if st.button('get random images'):
         images_pred.append(image)
 
 
-st.markdown(**'Annotated Bounding Boxes'**)
+st.markdown('**Annotated Bounding Boxes**')
 st.image(images, width=350, use_column_width=False)
-st.markdown(**'Predicted Bounding Boxes'**)
+st.markdown('**Predicted Bounding Boxes**')
 st.image(images_pred, width=350, use_column_width=False)
