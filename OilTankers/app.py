@@ -27,7 +27,7 @@ def load_dataset():
     return dataset
 
 
-def plot_bboxes(dataset):
+def plot_bboxes(test_dataset, remove_rectangles):
     images = list()
     images_pred = list()
 
@@ -60,10 +60,12 @@ test_dataset = load_dataset()
 
 #Maximum Sides Difference
 remove_rectangles = st.sidebar.checkbox('Remove Rectangles', value=False)
+random_run = st.button('get random images')
+
 plot_bboxes(test_dataset)
 
-if st.button('get random images'):
-    plot_bboxes(test_dataset)
+if random_run:
+    plot_bboxes(test_dataset, remove_rectangles)
 
 
 
