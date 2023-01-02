@@ -56,6 +56,8 @@ def plot_bboxes(test_dataset, remove_rectangles, slider_sides_diff):
 st.set_page_config(page_title='Tanker Detection')
 st.title('Floating Head Oil Tanker Detection')
 
+st.markdown('YOLO model was trained to identify floating head oil tankers.')
+
 yolo_model = load_model()
 test_dataset = load_dataset()
 
