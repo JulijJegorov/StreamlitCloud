@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 COLORS = ['#1F497D', '#4F81BD',  '#C0504D', '#9BBB59', '#8064A2', '#4BACC6', '#F79646', '#6B7C87', '#8064A2', '#00728C', '#6a1635', '#8EC3D8']
 COLORS_CYCLE = COLORS * 150
 
+
 def annotate_image(image_path: str, annotations: dict, categories: dict):
   image = Image.open(image_path)
   image_draw = ImageDraw.Draw(image, 'RGBA')
