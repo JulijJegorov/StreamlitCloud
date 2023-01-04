@@ -1,7 +1,0 @@
-streamlit>=1.14.0<1.15.0
-transformers==4.25.1
-torch==1.13.0
-pytorch-lightning==1.8.6
-torchvision==0.14.0
-pycocotools==2.0.6
-Pillow==9.4.0
